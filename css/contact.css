@@ -1,0 +1,6 @@
+.contact-grid{display:grid;grid-template-columns:1fr 360px;gap:1rem}
+.contact-form{background:var(--card);padding:1rem;border-radius:12px;box-shadow:var(--shadow);display:grid;gap:.6rem}
+.contact-form input,.contact-form textarea{padding:.75rem;border-radius:10px;border:1px solid rgba(0,0,0,0.06);background:transparent}
+.contact-links{background:var(--card);padding:1rem;border-radius:12px;box-shadow:var(--shadow);display:flex;flex-direction:column;gap:.6rem}
+.contact-link{display:flex;align-items:center;gap:.6rem;padding:.6rem;border-radius:10px;background:var(--bg-soft);border:none;text-decoration:none;color:inherit}
+.social-row{display:flex;gap:.5rem;margin-top:1rem}.social{display:inline-flex;align-items:center;justify-content:center;padding:.6rem;border-radius:10px;background:var(--bg-soft)}

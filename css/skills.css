@@ -1,0 +1,9 @@
+.skills-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:1rem}
+.skill-card{background:var(--card);padding:1rem;border-radius:14px;box-shadow:var(--shadow)}
+.skill{display:flex;flex-direction:column;gap:.35rem;margin:.5rem 0}
+.skill label{font-weight:700}
+.bar{height:12px;background:linear-gradient(90deg,rgba(0,0,0,0.03),transparent);border-radius:999px;overflow:hidden}
+.bar-fill{height:100%;width:var(--p,60%);background:linear-gradient(90deg,var(--primary),var(--accent));display:flex;align-items:center;justify-content:flex-end;padding-right:8px;color:white;font-weight:700;transition:width .9s cubic-bezier(.2,.9,.3,1)}
+.soft-list{padding-left:1rem}
+.learning-tags{display:flex;gap:.5rem;flex-wrap:wrap;margin-top:.6rem}
+.learning-tags span{background:var(--chip);padding:.4rem .6rem;border-radius:999px;font-weight:600}

@@ -1,0 +1,332 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Prince — Portfolio</title>
+  <meta name="description" content="Nure Alam Siddiki Prince — Computer Science Student, ML Enthusiast & Web Developer from Chuadanga, Bangladesh.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/sidebar.css">
+  <link rel="stylesheet" href="css/about.css">
+  <link rel="stylesheet" href="css/skills.css">
+  <link rel="stylesheet" href="css/projects.css">
+  <link rel="stylesheet" href="css/education.css">
+  <link rel="stylesheet" href="css/contact.css">
+  <script src="https://kit.fontawesome.com/a2c8f1a2a0.js" crossorigin="anonymous" defer></script>
+</head>
+<body data-theme="light">
+  <aside class="sidebar" id="sidebar" aria-label="Primary">
+    <div class="brand">
+      <div class="avatar" aria-hidden="true">P</div>
+      <div>
+        <h1 class="brand-name">Nure A. S. <span class="surname">Prince</span></h1>
+        <p class="brand-role">CSE Student • ML Enthusiast • Web Dev</p>
+      </div>
+    </div>
+
+    <nav role="navigation" aria-label="Main Navigation">
+      <a href="#home" class="nav-link active" data-link><i class="fa-solid fa-house"></i><span>Home</span></a>
+      <a href="#about" class="nav-link" data-link><i class="fa-solid fa-user"></i><span>About</span></a>
+      <a href="#skills" class="nav-link" data-link><i class="fa-solid fa-screwdriver-wrench"></i><span>Skills</span></a>
+      <a href="#projects" class="nav-link" data-link><i class="fa-solid fa-diagram-project"></i><span>Projects</span></a>
+      <a href="#education" class="nav-link" data-link><i class="fa-solid fa-graduation-cap"></i><span>Education</span></a>
+      <a href="#contact" class="nav-link" data-link><i class="fa-solid fa-envelope"></i><span>Contact</span></a>
+    </nav>
+
+    <div class="sidebar-actions">
+      <button id="themeToggle" class="btn theme-toggle" aria-pressed="false" title="Toggle theme"><i class="fa-solid fa-circle-half-stroke"></i><span>Theme</span></button>
+      <a class="btn resume" href="assets/resume/Prince_Resume.pdf" download><i class="fa-solid fa-download"></i><span>Download CV</span></a>
+    </div>
+    <div class="sidebar-footer" aria-hidden="true">
+      <small>Built with ❤️ · Responsive</small>
+    </div>
+  </aside>
+
+  <main class="content" id="content">
+    <header class="topbar">
+      <button id="mobileMenu" class="mobile-menu" aria-label="Open menu"><i class="fa-solid fa-bars"></i></button>
+      <div class="top-actions">
+        <button id="contactQuick" class="btn small ghost"><i class="fa-solid fa-envelope"></i> Contact</button>
+      </div>
+    </header>
+
+    <section id="home" class="section hero reveal" tabindex="-1" aria-label="Home">
+      <div class="hero-inner">
+        <div class="left">
+          <h2 class="hello">Hello — I'm</h2>
+          <h1 class="title">Nure Alam Siddiki <span class="accent">Prince</span></h1>
+          <p class="subtitle">Undergrad CSE Student • Machine Learning Enthusiast • Web Developer</p>
+          <p class="tagline">I love exploring — from algorithms to new places. I build practical web apps and learn ML to solve real problems.</p>
+          <div class="cta">
+            <a href="#projects" class="btn primary">See Projects</a>
+            <a href="#contact" class="btn ghost">Get in Touch</a>
+          </div>
+          <div class="quick-stats">
+            <div class="stat"><strong>4</strong><span>Major Projects</span></div>
+            <div class="stat"><strong>3</strong><span>Years of Study</span></div>
+            <div class="stat"><strong>10+</strong><span>Technologies</span></div>
+          </div>
+        </div>
+        <div class="right">
+          <div class="profile-card" aria-hidden="true">
+            <div class="profile-blob"></div>
+            <img src="assets/img/profile-placeholder.png" alt="Profile placeholder" />
+            <div class="profile-info">
+              <h3>Prince</h3>
+              <p>Chuadanga, Bangladesh</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="about" class="section reveal" aria-label="About">
+      <h2 class="section-title">About Me</h2>
+      <div class="about-grid">
+        <div class="about-card">
+          <p><strong>Nure Alam Siddiki Prince</strong> — an undergraduate Computer Science & Engineering student at <strong>Khulna University of Engineering & Technology (KUET)</strong>, batch 2021. Originally from <strong>Chuadanga, Bangladesh</strong>, I am a practicing <strong>Muslim</strong> who combines curiosity with discipline to learn and build.</p>
+          <p>I focus on <strong>Machine Learning</strong> and <strong>Web Development</strong>. My interests also include travelling, discovering local foods, meeting new people, and applying computing to practical problems. I enjoy collaborating, leading small teams, and delivering functional, well-documented projects.</p>
+          <div class="badges">
+            <span class="badge">ML Enthusiast</span>
+            <span class="badge">Web Developer</span>
+            <span class="badge">Team Lead</span>
+          </div>
+        </div>
+        <div class="about-highlights">
+          <div class="highlight"><i class="fa-solid fa-location-dot"></i><div><strong>Location</strong><span>Chuadanga, Bangladesh</span></div></div>
+          <div class="highlight"><i class="fa-solid fa-mosque"></i><div><strong>Faith</strong><span>Muslim</span></div></div>
+          <div class="highlight"><i class="fa-solid fa-compass"></i><div><strong>Hobbies</strong><span>Traveling & Food</span></div></div>
+          <div class="highlight"><i class="fa-solid fa-people-group"></i><div><strong>Soft Skills</strong><span>Leadership, Communication</span></div></div>
+        </div>
+      </div>
+    </section>
+
+    <section id="skills" class="section reveal" aria-label="Skills">
+      <h2 class="section-title">Skills</h2>
+      <div class="skills-grid">
+        <div class="skill-card prog">
+          <h3>Programming Languages</h3>
+          <div class="skill">
+            <label>C</label>
+            <div class="bar"><div class="bar-fill" style="--p:85%;">85%</div></div>
+          </div>
+          <div class="skill">
+            <label>C++</label>
+            <div class="bar"><div class="bar-fill" style="--p:78%;">78%</div></div>
+          </div>
+          <div class="skill">
+            <label>Python</label>
+            <div class="bar"><div class="bar-fill" style="--p:82%;">82%</div></div>
+          </div>
+          <div class="skill">
+            <label>Assembly</label>
+            <div class="bar"><div class="bar-fill" style="--p:56%;">56%</div></div>
+          </div>
+          <div class="skill">
+            <label>Java</label>
+            <div class="bar"><div class="bar-fill" style="--p:60%;">60%</div></div>
+          </div>
+        </div>
+
+        <div class="skill-card prog">
+          <h3>Web & Tools</h3>
+          <div class="skill"><label>HTML/CSS</label><div class="bar"><div class="bar-fill" style="--p:88%;">88%</div></div></div>
+          <div class="skill"><label>JavaScript</label><div class="bar"><div class="bar-fill" style="--p:75%;">75%</div></div></div>
+          <div class="skill"><label>SQL</label><div class="bar"><div class="bar-fill" style="--p:64%;">64%</div></div></div>
+          <div class="skill"><label>Linux</label><div class="bar"><div class="bar-fill" style="--p:70%;">70%</div></div></div>
+          <div class="skill"><label>Git</label><div class="bar"><div class="bar-fill" style="--p:72%;">72%</div></div></div>
+        </div>
+
+        <div class="skill-card soft">
+          <h3>Soft Skills</h3>
+          <ul class="soft-list">
+            <li>Leadership — lead university project teams</li>
+            <li>Teamwork — collaborative developer & mentor</li>
+            <li>Communication — technical documentation & presentation</li>
+          </ul>
+        </div>
+
+        <div class="skill-card tools">
+          <h3>Learning Focus</h3>
+          <p>Currently expanding in: <strong>Machine Learning (PyTorch)</strong>, <strong>Full-stack Web</strong>, and <strong>Systems Design</strong>.</p>
+          <div class="learning-tags">
+            <span>PyTorch</span><span>Node.js</span><span>React</span><span>REST APIs</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="projects" class="section reveal" aria-label="Projects">
+      <h2 class="section-title">Projects</h2>
+      <div class="projects-controls">
+        <div class="filters">
+          <button class="filter active" data-filter="all">All</button>
+          <button class="filter" data-filter="desktop">Desktop</button>
+          <button class="filter" data-filter="dld">DLD</button>
+          <button class="filter" data-filter="oop">OOP</button>
+        </div>
+      </div>
+
+      <div class="projects-grid" id="projectsGrid">
+        <article class="project-card" data-type="oop">
+          <div class="thumb"><img src="assets/img/bank.svg" alt="Bank system"></div>
+          <div class="project-content">
+            <h3>Bank Management System</h3>
+            <p>OOP in C++: simulated banking operations — accounts, transactions, reporting, and file persistence.</p>
+            <div class="project-meta"><span class="tag">C++</span><span class="tag">OOP</span></div>
+            <div class="project-actions">
+              <a class="btn small" href="https://github.com/your-username/bank-management" target="_blank" rel="noopener"><i class="fa-brands fa-github"></i> GitHub</a>
+              <button class="btn small outline" data-open="modal-bank">Details</button>
+            </div>
+          </div>
+        </article>
+
+        <article class="project-card" data-type="dld">
+          <div class="thumb"><img src="assets/img/clock.svg" alt="DLD clock"></div>
+          <div class="project-content">
+            <h3>Digital Logic Clock</h3>
+            <p>DLD: A time clock with counter logic that intentionally skips 50 during minutes/seconds — implemented with combinational logic diagrams and simulation.</p>
+            <div class="project-meta"><span class="tag">DLD</span><span class="tag">Simulation</span></div>
+            <div class="project-actions">
+              <a class="btn small" href="https://github.com/your-username/dld-clock" target="_blank" rel="noopener"><i class="fa-brands fa-github"></i> GitHub</a>
+              <button class="btn small outline" data-open="modal-clock">Details</button>
+            </div>
+          </div>
+        </article>
+
+        <article class="project-card" data-type="arch">
+          <div class="thumb"><img src="assets/img/cpu.svg" alt="CPU design"></div>
+          <div class="project-content">
+            <h3>CPU Design</h3>
+            <p>Computer Architecture: datapath & control unit design — simulated instruction flow and pipeline basics.</p>
+            <div class="project-meta"><span class="tag">Architecture</span><span class="tag">Verilog/Model</span></div>
+            <div class="project-actions">
+              <a class="btn small" href="https://github.com/your-username/cpu-design" target="_blank" rel="noopener"><i class="fa-brands fa-github"></i> GitHub</a>
+              <button class="btn small outline" data-open="modal-cpu">Details</button>
+            </div>
+          </div>
+        </article>
+
+        <article class="project-card" data-type="desktop">
+          <div class="thumb"><img src="assets/img/hotel.svg" alt="Hotel management"></div>
+          <div class="project-content">
+            <h3>Hotel Management System</h3>
+            <p>Desktop app: reservation, billing, and inventory with GUI and data persistence for small hotels.</p>
+            <div class="project-meta"><span class="tag">Desktop</span><span class="tag">C++/GUI</span></div>
+            <div class="project-actions">
+              <a class="btn small" href="https://github.com/your-username/hotel-management" target="_blank" rel="noopener"><i class="fa-brands fa-github"></i> GitHub</a>
+              <button class="btn small outline" data-open="modal-hotel">Details</button>
+            </div>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <section id="education" class="section reveal" aria-label="Education">
+      <h2 class="section-title">Education</h2>
+      <div class="edu-timeline">
+        <div class="edu-item">
+          <div class="dot"></div>
+          <div class="edu-card">
+            <h3>Khulna University of Engineering & Technology (KUET)</h3>
+            <p>B.Sc. in Computer Science & Engineering — Batch 2021 — Currently 3rd Year, 1st Semester</p>
+          </div>
+        </div>
+        <div class="edu-item">
+          <div class="dot"></div>
+          <div class="edu-card">
+            <h3>Chuadanga Government College</h3>
+            <p>HSC (Science) — 2019 – 2021</p>
+          </div>
+        </div>
+        <div class="edu-item">
+          <div class="dot"></div>
+          <div class="edu-card">
+            <h3>Victoria Jubilee Government High School</h3>
+            <p>SSC (Science) — 2011 – 2019</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="contact" class="section reveal" aria-label="Contact">
+      <h2 class="section-title">Contact & Connect</h2>
+      <div class="contact-grid">
+        <form id="contactForm" class="contact-form" data-destination="your-email@example.com" aria-label="Contact form">
+          <label for="fromEmail">Your Email</label>
+          <input type="email" id="fromEmail" name="fromEmail" placeholder="you@example.com" required>
+          <label for="subject">Subject</label>
+          <input type="text" id="subject" name="subject" placeholder="Short subject" required>
+          <label for="message">Your Message</label>
+          <textarea id="message" name="message" rows="6" placeholder="Write your message..." required></textarea>
+          <div class="form-actions">
+            <button type="submit" class="btn primary">Send Email</button>
+            <button type="button" id="copyEmail" class="btn small">Copy Email</button>
+          </div>
+          <p class="form-note">The button will open your mail client. Replace the destination email in the form dataset.</p>
+        </form>
+        <aside class="contact-links" aria-label="Other contacts">
+          <a href="https://wa.me/your-number" class="contact-link" target="_blank" rel="noopener"><i class="fa-brands fa-whatsapp"></i><span>WhatsApp</span></a>
+          <a href="https://www.linkedin.com/in/your-profile" class="contact-link" target="_blank" rel="noopener"><i class="fa-brands fa-linkedin"></i><span>LinkedIn</span></a>
+          <a href="mailto:your-email@example.com" class="contact-link"><i class="fa-solid fa-envelope"></i><span>Email</span></a>
+          <div class="social-row">
+            <a href="#" class="social small"><i class="fa-brands fa-github"></i></a>
+            <a href="#" class="social small"><i class="fa-brands fa-facebook"></i></a>
+            <a href="#" class="social small"><i class="fa-brands fa-instagram"></i></a>
+          </div>
+        </aside>
+      </div>
+    </section>
+
+    <footer class="footer">
+      <p>© <span id="year"></span> Nure A. S. Prince — Designed for a one-month portfolio project.</p>
+    </footer>
+  </main>
+
+  <!-- Project modals -->
+  <div class="modal" id="modal-bank" aria-hidden="true" role="dialog" aria-labelledby="modal-bank-title">
+    <div class="modal-inner">
+      <button class="modal-close" data-close>&times;</button>
+      <h3 id="modal-bank-title">Bank Management System</h3>
+      <p>Details: Full OOP implementation in C++ with file persistence, account operations, role-based actions, and basic reports. Includes README, UML class diagram, and demo screenshots.</p>
+      <p><strong>Tech:</strong> C++, OOP, File I/O</p>
+      <a class="btn small" href="https://github.com/your-username/bank-management" target="_blank" rel="noopener"><i class="fa-brands fa-github"></i> GitHub</a>
+    </div>
+  </div>
+
+  <div class="modal" id="modal-clock" aria-hidden="true" role="dialog" aria-labelledby="modal-clock-title">
+    <div class="modal-inner">
+      <button class="modal-close" data-close>&times;</button>
+      <h3 id="modal-clock-title">Digital Logic Clock</h3>
+      <p>Details: Logic design showing how counters skip 50, truth tables, Karnaugh maps, and simulation waveforms. Packaged with project report and simulation files.</p>
+      <p><strong>Tech:</strong> DLD logic, Simulation</p>
+      <a class="btn small" href="https://github.com/your-username/dld-clock" target="_blank" rel="noopener"><i class="fa-brands fa-github"></i> GitHub</a>
+    </div>
+  </div>
+
+  <div class="modal" id="modal-cpu" aria-hidden="true" role="dialog" aria-labelledby="modal-cpu-title">
+    <div class="modal-inner">
+      <button class="modal-close" data-close>&times;</button>
+      <h3 id="modal-cpu-title">CPU Design</h3>
+      <p>Details: Datapath components, control signals, sample instruction set, and simple pipeline. Includes diagrams and simulation logs.</p>
+      <p><strong>Tech:</strong> Architecture models, Verilog (optional)</p>
+      <a class="btn small" href="https://github.com/your-username/cpu-design" target="_blank" rel="noopener"><i class="fa-brands fa-github"></i> GitHub</a>
+    </div>
+  </div>
+
+  <div class="modal" id="modal-hotel" aria-hidden="true" role="dialog" aria-labelledby="modal-hotel-title">
+    <div class="modal-inner">
+      <button class="modal-close" data-close>&times;</button>
+      <h3 id="modal-hotel-title">Hotel Management System</h3>
+      <p>Details: Desktop GUI with reservation, billing, inventory, and report generation. Built with straightforward GUI frameworks and file-based DB.</p>
+      <p><strong>Tech:</strong> C++ GUI, File DB</p>
+      <a class="btn small" href="https://github.com/your-username/hotel-management" target="_blank" rel="noopener"><i class="fa-brands fa-github"></i> GitHub</a>
+    </div>
+  </div>
+
+  <script src="js/script.js"></script>
+</body>
+</html>

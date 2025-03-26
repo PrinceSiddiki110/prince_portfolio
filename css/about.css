@@ -1,0 +1,7 @@
+.about-grid{display:grid;grid-template-columns:2fr 1fr;gap:1rem}
+.about-card{background:var(--card);padding:1rem;border-radius:16px;box-shadow:var(--shadow)}
+.badges{display:flex;gap:.5rem;margin-top:.6rem}
+.badge{background:var(--chip);padding:.4rem .6rem;border-radius:999px;font-weight:600}
+.about-highlights{background:var(--card);padding:1rem;border-radius:16px;box-shadow:var(--shadow);display:flex;flex-direction:column;gap:.8rem}
+.highlight{display:flex;gap:.8rem;align-items:center}
+.highlight i{background:var(--bg-soft);padding:.6rem;border-radius:10px}
