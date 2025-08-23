@@ -1,4 +1,5 @@
 // Enhanced script: theme, sidebar, navigation, reveal, filters, modals, form handling
+// DOM Elements
 const body = document.body;
 const themeToggle = document.getElementById('themeToggle');
 const sidebar = document.getElementById('sidebar');
@@ -8,6 +9,7 @@ const revealEls = document.querySelectorAll('.reveal');
 const filters = document.querySelectorAll('.filter');
 const projectsGrid = document.getElementById('projectsGrid');
 const modals = document.querySelectorAll('.modal');
+const yearSpan = document.getElementById('year');
 const contactForm = document.getElementById('contactForm');
 const copyEmailBtn = document.getElementById('copyEmail');
 const contactQuick = document.getElementById('contactQuick');
@@ -18,18 +20,20 @@ const userTheme = localStorage.getItem('theme') || (window.matchMedia && window.
 body.setAttribute('data-theme', userTheme);
 
 // Toggle theme with smooth transition
-themeToggle?.addEventListener('click', () => {
+if (themeToggle) {
+  themeToggle.addEventListener('click', () => {
   const next = body.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
   body.setAttribute('data-theme', next);
   localStorage.setItem('theme', next);
   themeToggle.setAttribute('aria-pressed', next === 'dark');
-});
+  });
+}
 
 // Mobile sidebar open/close
-mobileMenu?.addEventListener('click', () => sidebar.classList.toggle('open'));
+if (mobileMenu && sidebar) mobileMenu.addEventListener('click', () => sidebar.classList.toggle('open'));
 
 // Close sidebar when clicking nav (mobile)
-navLinks.forEach(l => l.addEventListener('click', () => sidebar.classList.remove('open')));
+navLinks.forEach(l => l.addEventListener('click', () => sidebar && sidebar.classList.remove('open')));
 
 // Smooth scroll and active link on click
 navLinks.forEach(link => {

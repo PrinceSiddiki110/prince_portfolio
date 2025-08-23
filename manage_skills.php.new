@@ -1,0 +1,77 @@
+<?php
+session_start();
+require_once __DIR__ . '/functions.php';
+require_once __DIR__ . '/db.php';
+require_admin();
+
+$skills = $pdo->query("SELECT * FROM skills ORDER BY sort_order, name")->fetchAll();
+?>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Manage Skills - Portfolio Admin</title>
+    <link rel="stylesheet" href="css/admin.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body class="admin-panel">
+    <?php include 'admin_sidebar.php'; ?>
+    
+    <main class="main-content">
+        <div class="dashboard-header">
+            <h1>Manage Skills</h1>
+            <div class="quick-actions">
+                <a href="add_skill.php" class="btn primary"><i class="fas fa-plus"></i> New Skill</a>
+            </div>
+        </div>
+
+        <section class="dashboard-section">
+            <div class="table-responsive">
+                <table class="admin-table">
+                    <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th>Level</th>
+                            <th width="120">Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <?php foreach ($skills as $skill): ?>
+                        <tr>
+                            <td>
+                                <div class="skill-name">
+                                    <?php echo htmlspecialchars($skill['name']); ?>
+                                </div>
+                            </td>
+                            <td>
+                                <div class="skill-level">
+                                    <div class="progress-bar">
+                                        <div class="progress" style="width: <?php echo $skill['level']; ?>%"></div>
+                                    </div>
+                                    <span class="level-text"><?php echo $skill['level']; ?>%</span>
+                                </div>
+                            </td>
+                            <td>
+                                <div class="actions">
+                                    <a href="edit_skill.php?id=<?php echo $skill['id']; ?>" class="btn small">
+                                        <i class="fas fa-edit"></i> Edit
+                                    </a>
+                                    <a href="delete_skill.php?id=<?php echo $skill['id']; ?>" 
+                                       class="btn small danger"
+                                       onclick="return confirm('Are you sure you want to delete this skill?')">
+                                        <i class="fas fa-trash"></i>
+                                    </a>
+                                </div>
+                            </td>
+                        </tr>
+                        <?php endforeach; ?>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+    </main>
+
+    <script src="js/admin.js"></script>
+</body>
+</html>
