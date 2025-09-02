@@ -53,34 +53,25 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         }
         
         if (empty($error)) {
-            try {
-                // Generate URL-friendly slug
-                $slug = strtolower(preg_replace('/[^a-z0-9-]/', '-', $title));
-                $slug = preg_replace('/-+/', '-', $slug);
-                $slug = trim($slug, '-');
-                
-                $stmt = $pdo->prepare("
-                    INSERT INTO projects (title, slug, description, type, tags, url, image)
-                    VALUES (?, ?, ?, ?, ?, ?, ?)
-                ");
-                
-                $stmt->execute([
-                    $title,
-                    $slug,
-                    $description,
-                    $type,
-                    $tech_tags,
-                    $repo_url,
-                    $thumb_filename
-                ]);
-                
-                $message = "Project added successfully!";
-                
-                // Clear form data
-                $title = $description = $type = $tech_tags = $repo_url = '';
-                
-            } catch (PDOException $e) {
-                $error = "Database error: " . $e->getMessage();
+            // Generate URL-friendly slug
+            $slug = strtolower(preg_replace('/[^a-z0-9-]/', '-', $title));
+            $slug = preg_replace('/-+/', '-', $slug);
+            $slug = trim($slug, '-');
+
+            $sql = "INSERT INTO projects (title, slug, description, type, tags, github_url, image) VALUES (?, ?, ?, ?, ?, ?, ?)";
+            if ($stmt = $mysqli->prepare($sql)) {
+                // bind parameters (all strings)
+                $stmt->bind_param('sssssss', $title, $slug, $description, $type, $tech_tags, $repo_url, $thumb_filename);
+                if ($stmt->execute()) {
+                    $message = "Project added successfully!";
+                    // Clear form data
+                    $title = $description = $type = $tech_tags = $repo_url = '';
+                } else {
+                    $error = "Database error: " . $stmt->error;
+                }
+                $stmt->close();
+            } else {
+                $error = "Database prepare error: " . $mysqli->error;
             }
         }
     }

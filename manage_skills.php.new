@@ -27,7 +27,7 @@ $skills = $pdo->query("SELECT * FROM skills ORDER BY sort_order, name")->fetchAl
         </div>
 
         <section class="dashboard-section">
-            <div class="table-responsive">
+            <div class="table-responsive" style="margin-left:280px">
                 <table class="admin-table">
                     <thead>
                         <tr>

@@ -1,4 +1,4 @@
-.about-grid{display:grid;grid-template-columns:2fr 1fr;gap:1rem}
+.about-grid{display:flex;gap:1rem;flex-wrap:wrap}
 .about-card{background:var(--card);padding:1rem;border-radius:16px;box-shadow:var(--shadow)}
 .badges{display:flex;gap:.5rem;margin-top:.6rem}
 .badge{background:var(--chip);padding:.4rem .6rem;border-radius:999px;font-weight:600}

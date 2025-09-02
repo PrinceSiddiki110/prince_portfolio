@@ -48,21 +48,21 @@ CREATE TABLE IF NOT EXISTS `skills` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- Programming Languages
-INSERT INTO `skills` (`name`, `level`, `sort_order`) VALUES
-('C', '85', 1),
-('C++', '78', 2),
-('Python', '82', 3),
-('Assembly', '56', 4),
-('Java', '60', 5),
-('HTML/CSS', '88', 6),
-('JavaScript', '75', 7),
-('SQL', '64', 8),
-('Linux', '70', 9),
-('Git', '72', 10),
-('PyTorch', '50', 11),
-('Node.js', '50', 12),
-('React', '50', 13),
-('REST APIs', '50', 14);
+INSERT INTO `skills` (`name`, `category`, `level`, `sort_order`) VALUES
+('C', 'Programming', 85, 1),
+('C++', 'Programming', 78, 2),
+('Python', 'Programming', 82, 3),
+('Assembly', 'Programming', 56, 4),
+('Java', 'Programming', 60, 5),
+('HTML/CSS', 'Web Development', 88, 6),
+('JavaScript', 'Web Development', 75, 7),
+('SQL', 'Database', 64, 8),
+('Linux', 'Tools', 70, 9),
+('Git', 'Tools', 72, 10),
+('PyTorch', 'Machine Learning', 50, 11),
+('Node.js', 'Web Development', 50, 12),
+('React', 'Web Development', 50, 13),
+('REST APIs', 'Web Development', 50, 14);
 
 -- Education table
 CREATE TABLE IF NOT EXISTS `education` (
@@ -106,11 +106,11 @@ INSERT INTO `projects` (`title`, `slug`, `description`, `image`, `type`, `tags`,
 ('E-commerce Site', 'ecommerce-site', 'Full-featured online store.', 'ecommerce.png', 'web', 'php,javascript,mysql', 'https://github.com/PrinceSiddiki/ecommerce');
 
 -- Add more skills
-INSERT INTO `skills` (`name`,`level`,`sort_order`) VALUES
-('MySQL','Advanced',4),
-('React','Intermediate',5),
-('Node.js','Beginner',6),
-('Python','Intermediate',7);
+INSERT INTO `skills` (`name`, `category`, `level`, `sort_order`) VALUES
+('MySQL', 'Database', 75, 15),
+('React', 'Web Development', 65, 16),
+('Node.js', 'Web Development', 60, 17),
+('Python', 'Programming', 82, 18);
 
 -- Add more education entries
 INSERT INTO `education` (`institution`,`degree`,`start_year`,`end_year`,`description`,`sort_order`) VALUES

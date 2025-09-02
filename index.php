@@ -1,27 +1,34 @@
 <?php
 require_once 'db.php';
 
-// Convert skill levels to categories based on name/type
+// Group skills by category using mysqli
 $skills = [];
-$stmt = $pdo->query("SELECT * FROM skills ORDER BY sort_order");
-while ($row = $stmt->fetch()) {
-  // Categorize skills based on their names/types
-  if (in_array($row['name'], ['C', 'C++', 'Python', 'Assembly', 'Java'])) {
-    $skills['programming'][] = $row;
-  } elseif (in_array($row['name'], ['HTML/CSS', 'JavaScript', 'SQL', 'Linux', 'Git'])) {
-    $skills['web'][] = $row;
-  } elseif (in_array($row['name'], ['PyTorch', 'Node.js', 'React', 'REST APIs'])) {
-    $skills['learning'][] = $row;
+$res = $mysqli->query("SELECT * FROM skills ORDER BY sort_order");
+if ($res) {
+  while ($row = $res->fetch_assoc()) {
+    $category = strtolower(str_replace(' ', '_', $row['category']));
+    $skills[$category][] = $row;
   }
+  $res->free();
+} else {
+  $skills = [];
 }
 
 // Fetch projects
-$stmt = $pdo->query("SELECT * FROM projects ORDER BY created_at DESC");
-$projects = $stmt->fetchAll();
+$projects = [];
+$res = $mysqli->query("SELECT * FROM projects ORDER BY created_at DESC");
+if ($res) {
+  $projects = $res->fetch_all(MYSQLI_ASSOC);
+  $res->free();
+}
 
 // Fetch education
-$stmt = $pdo->query("SELECT * FROM education ORDER BY sort_order");
-$education = $stmt->fetchAll();
+$education = [];
+$res = $mysqli->query("SELECT * FROM education ORDER BY sort_order");
+if ($res) {
+  $education = $res->fetch_all(MYSQLI_ASSOC);
+  $res->free();
+}
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -35,7 +42,7 @@ $education = $stmt->fetchAll();
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="css/style.css">
-  <link rel="stylesheet" href="css/sidebar.css">
+  <link rel="stylesheet" href="css/navigation.css">
   <link rel="stylesheet" href="css/about.css">
   <link rel="stylesheet" href="css/skills.css">
   <link rel="stylesheet" href="css/projects.css">
@@ -46,14 +53,85 @@ $education = $stmt->fetchAll();
 </head>
 
 <body data-theme="light">
+    <!-- Navigation Bar -->
+    <nav class="navbar" id="navbar">
+        <div class="nav-container">
+            <!-- Logo/Brand -->
+            <div class="nav-brand">
+                <div class="brand-avatar">P</div>
+                <div class="brand-text">
+                    <h1 class="brand-name">Nure A. S. <span class="surname">Prince</span></h1>
+                    <p class="brand-role">CSE Student • ML Enthusiast • Web Dev</p>
+                </div>
+            </div>
 
-    <main class="content" id="content">
-      <header class="topbar">
-        <button id="mobileMenu" class="mobile-menu" aria-label="Open menu"><i class="fa-solid fa-bars"></i></button>
-        <div class="top-actions">
-          <button id="contactQuick" class="btn small ghost"><i class="fa-solid fa-envelope"></i> Contact</button>
+            <!-- Desktop Navigation -->
+            <div class="nav-menu" id="nav-menu">
+                <a href="#home" class="nav-link active" data-link>
+                    <i class="fa-solid fa-house"></i>
+                    <span>Home</span>
+                </a>
+                <a href="#about" class="nav-link" data-link>
+                    <i class="fa-solid fa-user"></i>
+                    <span>About</span>
+                </a>
+                <a href="#skills" class="nav-link" data-link>
+                    <i class="fa-solid fa-screwdriver-wrench"></i>
+                    <span>Skills</span>
+                </a>
+                <a href="#projects" class="nav-link" data-link>
+                    <i class="fa-solid fa-diagram-project"></i>
+                    <span>Projects</span>
+                </a>
+                <a href="#education" class="nav-link" data-link>
+                    <i class="fa-solid fa-graduation-cap"></i>
+                    <span>Education</span>
+                </a>
+                <a href="#contact" class="nav-link" data-link>
+                    <i class="fa-solid fa-envelope"></i>
+                    <span>Contact</span>
+                </a>
+            </div>
+
+            <!-- Right Side Actions -->
+            <div class="nav-actions">
+                <button id="themeToggle" class="btn btn-theme" aria-pressed="false" title="Toggle theme">
+                    <i class="fa-solid fa-sun theme-icon sun"></i>
+                    <i class="fa-solid fa-moon theme-icon moon"></i>
+                </button>
+                <a class="btn btn-resume" href="assets/resume/Prince_Resume.pdf" download>
+                    <i class="fa-solid fa-download"></i>
+                    <span class="resume-text">Download CV</span>
+                </a>
+                <button class="nav-toggle" id="nav-toggle" aria-label="Toggle navigation menu">
+                    <span class="hamburger"></span>
+                </button>
+            </div>
         </div>
-      </header>
+    </nav>
+
+    <!-- Mobile Navigation Overlay -->
+    <div class="mobile-nav-overlay" id="mobile-nav-overlay"></div>
+
+    <!-- Main Content -->
+    <main class="main-content" id="content">
+            <header class="topbar">
+                <div class="topbar-left">
+                    <button id="mobileMenu" class="mobile-menu" aria-label="Open navigation menu" aria-expanded="false">
+                        <i class="fa-solid fa-bars"></i>
+                    </button>
+                    <button id="sidebarToggle" class="sidebar-toggle" aria-label="Toggle sidebar">
+                        <i class="fa-solid fa-chevron-left"></i>
+                    </button>
+                </div>
+                <div class="topbar-right">
+                    <div class="top-actions">
+                        <button id="contactQuick" class="btn small ghost">
+                            <i class="fa-solid fa-envelope"></i> Contact
+                        </button>
+                    </div>
+                </div>
+            </header>
 
       <section id="home" class="section hero reveal" tabindex="-1" aria-label="Home">
         <div class="hero-inner">
@@ -69,7 +147,7 @@ $education = $stmt->fetchAll();
             <div class="quick-stats">
               <div class="stat"><strong><?php echo count($projects); ?></strong><span>Major Projects</span></div>
               <div class="stat"><strong>3</strong><span>Years of Study</span></div>
-              <div class="stat"><strong><?php echo count($skills['programming'] ?? []) + count($skills['web'] ?? []); ?></strong><span>Technologies</span></div>
+              <div class="stat"><strong><?php echo array_sum(array_map('count', $skills)); ?></strong><span>Technologies</span></div>
             </div>
           </div>
           <div class="right">
@@ -99,16 +177,16 @@ $education = $stmt->fetchAll();
           </div>
           <div class="about-highlights">
             <div class="highlight"><i class="fa-solid fa-location-dot"></i>
-              <div><strong>Location</strong><span>Chuadanga, Bangladesh</span></div>
+              <div><strong>Location : </strong><span>Chuadanga, Bangladesh</span></div>
             </div>
             <div class="highlight"><i class="fa-solid fa-mosque"></i>
-              <div><strong>Faith</strong><span>Muslim</span></div>
+              <div><strong>Faith : </strong><span>Muslim</span></div>
             </div>
             <div class="highlight"><i class="fa-solid fa-compass"></i>
-              <div><strong>Hobbies</strong><span>Traveling & Food</span></div>
+              <div><strong>Hobbies : </strong><span>Traveling & Food</span></div>
             </div>
             <div class="highlight"><i class="fa-solid fa-people-group"></i>
-              <div><strong>Soft Skills</strong><span>Leadership, Communication</span></div>
+              <div><strong>Soft Skills : </strong><span>Leadership, Communication</span></div>
             </div>
           </div>
         </div>
@@ -117,10 +195,22 @@ $education = $stmt->fetchAll();
       <section id="skills" class="section reveal" aria-label="Skills">
         <h2 class="section-title">Skills</h2>
         <div class="skills-grid">
-          <?php if (isset($skills['programming'])): ?>
-            <div class="skill-card prog">
-              <h3>Programming Languages</h3>
-              <?php foreach ($skills['programming'] as $skill): ?>
+          <?php 
+          $categoryTitles = [
+            'programming' => 'Programming Languages',
+            'web_development' => 'Web Development',
+            'database' => 'Database',
+            'tools' => 'Tools & Technologies',
+            'machine_learning' => 'Machine Learning'
+          ];
+          
+          foreach ($skills as $category => $categorySkills): 
+            if (empty($categorySkills)) continue;
+            $title = $categoryTitles[$category] ?? ucfirst(str_replace('_', ' ', $category));
+          ?>
+            <div class="skill-card">
+              <h3><?php echo $title; ?></h3>
+              <?php foreach ($categorySkills as $skill): ?>
                 <div class="skill">
                   <label><?php echo htmlspecialchars($skill['name']); ?></label>
                   <div class="bar">
@@ -129,21 +219,7 @@ $education = $stmt->fetchAll();
                 </div>
               <?php endforeach; ?>
             </div>
-          <?php endif; ?>
-
-          <?php if (isset($skills['web'])): ?>
-            <div class="skill-card prog">
-              <h3>Web & Tools</h3>
-              <?php foreach ($skills['web'] as $skill): ?>
-                <div class="skill">
-                  <label><?php echo htmlspecialchars($skill['name']); ?></label>
-                  <div class="bar">
-                    <div class="bar-fill" style="--p:<?php echo $skill['level']; ?>%;"><?php echo $skill['level']; ?>%</div>
-                  </div>
-                </div>
-              <?php endforeach; ?>
-            </div>
-          <?php endif; ?>
+          <?php endforeach; ?>
 
           <div class="skill-card soft">
             <h3>Soft Skills</h3>
@@ -153,18 +229,6 @@ $education = $stmt->fetchAll();
               <li>Communication — technical documentation & presentation</li>
             </ul>
           </div>
-
-          <?php if (isset($skills['learning'])): ?>
-            <div class="skill-card tools">
-              <h3>Learning Focus</h3>
-              <p>Currently expanding in: <strong>Machine Learning (PyTorch)</strong>, <strong>Full-stack Web</strong>, and <strong>Systems Design</strong>.</p>
-              <div class="learning-tags">
-                <?php foreach ($skills['learning'] as $skill): ?>
-                  <span><?php echo htmlspecialchars($skill['name']); ?></span>
-                <?php endforeach; ?>
-              </div>
-            </div>
-          <?php endif; ?>
         </div>
       </section>
 
@@ -185,7 +249,15 @@ $education = $stmt->fetchAll();
         <div class="projects-grid" id="projectsGrid">
           <?php foreach ($projects as $project): ?>
             <article class="project-card" data-type="<?php echo htmlspecialchars($project['type']); ?>">
-              <div class="thumb"><img src="assets/img/<?php echo htmlspecialchars($project['image']); ?>" alt="<?php echo htmlspecialchars($project['title']); ?>"></div>
+              <div class="thumb">
+                <?php if (!empty($project['image']) && file_exists('assets/img/projects/' . $project['image'])): ?>
+                  <img src="assets/img/projects/<?php echo htmlspecialchars($project['image']); ?>" alt="<?php echo htmlspecialchars($project['title']); ?>">
+                <?php elseif (!empty($project['image']) && file_exists('assets/img/' . $project['image'])): ?>
+                  <img src="assets/img/<?php echo htmlspecialchars($project['image']); ?>" alt="<?php echo htmlspecialchars($project['title']); ?>">
+                <?php else: ?>
+                  <img src="" alt="<?php echo htmlspecialchars($project['title']); ?>" style="display: none;">
+                <?php endif; ?>
+              </div>
               <div class="project-content">
                 <h3><?php echo htmlspecialchars($project['title']); ?></h3>
                 <p><?php echo htmlspecialchars($project['description']); ?></p>
@@ -235,6 +307,8 @@ $education = $stmt->fetchAll();
         <h2 class="section-title">Contact & Connect</h2>
         <div class="contact-grid">
           <form id="contactForm" class="contact-form" method="post" action="contact_process.php" aria-label="Contact form">
+            <label for="name">Your Name</label>
+            <input type="text" id="name" name="name" placeholder="Your full name" required>
             <label for="fromEmail">Your Email</label>
             <input type="email" id="fromEmail" name="fromEmail" placeholder="you@example.com" required>
             <label for="subject">Subject</label>
@@ -242,10 +316,10 @@ $education = $stmt->fetchAll();
             <label for="message">Your Message</label>
             <textarea id="message" name="message" rows="6" placeholder="Write your message..." required></textarea>
             <div class="form-actions">
-              <button type="submit" class="btn primary">Send Email</button>
+              <button type="submit" class="btn primary">Send Message</button>
               <button type="button" id="copyEmail" class="btn small">Copy Email</button>
             </div>
-            <p class="form-note">The button will submit the form. Your message will be saved and I'll get back to you soon.</p>
+            <p class="form-note">Your message will be saved and I'll get back to you soon.</p>
           </form>
           <aside class="contact-links" aria-label="Other contacts">
             <a href="https://wa.me/your-number" class="contact-link" target="_blank" rel="noopener"><i class="fa-brands fa-whatsapp"></i><span>WhatsApp</span></a>
@@ -260,58 +334,9 @@ $education = $stmt->fetchAll();
         </div>
       </section>
     </main>
-    <footer class="footer">
-      <p>© <span id="year"></span> Nure Alam Siddiki Prince</p>
-    </footer>
-    
-    <aside class="sidebar" id="sidebar" aria-label="Primary">
-      <div class="brand">
-        <div class="avatar" aria-hidden="true">P</div>
-        <div>
-          <h1 class="brand-name">Nure A. S. <span class="surname">Prince</span></h1>
-          <p class="brand-role">CSE Student • ML Enthusiast • Web Dev</p>
-        </div>
-      </div>
-
-      <nav role="navigation" aria-label="Main Navigation">
-        <a href="#home" class="nav-link active" data-link><i class="fa-solid fa-house"></i><span>Home</span></a>
-        <a href="#about" class="nav-link" data-link><i class="fa-solid fa-user"></i><span>About</span></a>
-        <a href="#skills" class="nav-link" data-link><i class="fa-solid fa-screwdriver-wrench"></i><span>Skills</span></a>
-        <a href="#projects" class="nav-link" data-link><i class="fa-solid fa-diagram-project"></i><span>Projects</span></a>
-        <a href="#education" class="nav-link" data-link><i class="fa-solid fa-graduation-cap"></i><span>Education</span></a>
-        <a href="#contact" class="nav-link" data-link><i class="fa-solid fa-envelope"></i><span>Contact</span></a>
-      </nav>
-
-      <div class="sidebar-actions">
-        <button id="themeToggle" class="btn theme-toggle" aria-pressed="false" title="Toggle theme"><i class="fa-solid fa-circle-half-stroke"></i><span>Theme</span></button>
-        <a class="btn resume" href="assets/resume/Prince_Resume.pdf" download><i class="fa-solid fa-download"></i><span>Download CV</span></a>
-      </div>
-      <div class="sidebar-footer" aria-hidden="true">
-        <small>Built with ❤️ · Responsive</small>
-      </div>
-    </aside>
- <!-- .layout -->
-  <!-- Project modals -->
-  <?php foreach ($projects as $project): ?>
-    <div class="modal" id="modal-<?php echo $project['slug']; ?>" aria-hidden="true" role="dialog" aria-labelledby="modal-<?php echo $project['slug']; ?>-title">
-      <div class="modal-inner">
-        <button class="modal-close" data-close>&times;</button>
-        <h3 id="modal-<?php echo $project['slug']; ?>-title"><?php echo htmlspecialchars($project['title']); ?></h3>
-        <p>Details: <?php echo htmlspecialchars($project['description']); ?></p>
-        <p><strong>Tech:</strong> <?php echo htmlspecialchars($project['tags']); ?></p>
-        <a class="btn small" href="<?php echo htmlspecialchars($project['github_url']); ?>" target="_blank" rel="noopener"><i class="fa-brands fa-github"></i> GitHub</a>
-      </div>
     </div>
-  <?php endforeach; ?>
 
-  <script src="js/script.js"></script>
-  <nav class="mobile-nav" aria-hidden="true">
-    <a href="#home" class="mobile-nav-link active"><i class="fas fa-home"></i></a>
-    <a href="#about" class="mobile-nav-link"><i class="fas fa-user"></i></a>
-    <a href="#skills" class="mobile-nav-link"><i class="fas fa-code"></i></a>
-    <a href="#projects" class="mobile-nav-link"><i class="fas fa-project-diagram"></i></a>
-    <a href="#contact" class="mobile-nav-link"><i class="fas fa-envelope"></i></a>
-  </nav>
+    <script src="js/script.js"></script>
 </body>
 
 </html>

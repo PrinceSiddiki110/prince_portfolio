@@ -2,20 +2,37 @@
 
 // Mobile menu toggle
 document.addEventListener('DOMContentLoaded', function() {
-    const mobileMenuBtn = document.getElementById('mobileMenu');
-    const sidebar = document.querySelector('.admin-sidebar') || document.querySelector('.sidebar');
+    const mobileMenuToggle = document.getElementById('mobileMenuToggle');
+    const sidebarToggle = document.getElementById('sidebarToggle');
+    const sidebar = document.getElementById('adminSidebar');
     
-    if (mobileMenuBtn && sidebar) {
-        mobileMenuBtn.addEventListener('click', () => {
+    // Mobile menu toggle
+    if (mobileMenuToggle && sidebar) {
+        mobileMenuToggle.addEventListener('click', () => {
             sidebar.classList.toggle('active');
         });
     }
     
-    // Close sidebar when clicking outside
+    // Sidebar toggle (desktop collapse)
+    if (sidebarToggle && sidebar) {
+        sidebarToggle.addEventListener('click', () => {
+            sidebar.classList.toggle('collapsed');
+        });
+    }
+    
+    // Close sidebar when clicking outside (mobile only)
     document.addEventListener('click', (e) => {
-        if (sidebar?.classList.contains('active') && 
+        if (window.innerWidth <= 768 && 
+            sidebar?.classList.contains('active') && 
             !sidebar.contains(e.target) && 
-            e.target !== mobileMenuBtn) {
+            e.target !== mobileMenuToggle) {
+            sidebar.classList.remove('active');
+        }
+    });
+    
+    // Handle window resize
+    window.addEventListener('resize', () => {
+        if (window.innerWidth > 768) {
             sidebar.classList.remove('active');
         }
     });

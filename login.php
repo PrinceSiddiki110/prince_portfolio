@@ -1,7 +1,7 @@
 
 <?php
 session_start();
-require __DIR__ . '/db.php'; // db.php must provide a PDO instance in $pdo
+require __DIR__ . '/db.php'; // db.php provides $mysqli
 
 // If already logged in, go to admin panel
 if (!empty($_SESSION['admin_id'])) {
@@ -24,9 +24,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
       $err = 'Invalid username or password';
     } else {
       try {
-        $stmt = $pdo->prepare('SELECT id, password FROM admins WHERE username = ? LIMIT 1');
-        $stmt->execute([$username]);
-        $admin = $stmt->fetch(PDO::FETCH_ASSOC);
+        $stmt = $mysqli->prepare('SELECT id, password FROM admins WHERE username = ? LIMIT 1');
+        $stmt->bind_param('s', $username);
+        $stmt->execute();
+        $stmt->bind_result($admin_id, $admin_password);
+        $admin = null;
+        if ($stmt->fetch()) {
+          $admin = ['id' => $admin_id, 'password' => $admin_password];
+        }
+        $stmt->close();
 
         if ($admin && ($password == $admin['password'])) {
           session_regenerate_id(true);

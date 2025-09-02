@@ -81,8 +81,8 @@ body {
   color: var(--text);
   line-height: 1.6;
   min-height: 100vh;
-  display: grid;
-  grid-template-columns: 300px 1fr;
+  display: flex;
+  /* previous layout columns retained for reference */
   -webkit-font-smoothing: antialiased;
   transition: background var(--transition), color var(--transition);
 }
@@ -124,10 +124,10 @@ body {
 }
 
 .hero-inner {
-  display: grid;
-  grid-template-columns: 1fr 380px;
+  display: flex;
   gap: var(--space-4);
   align-items: center;
+  flex-wrap: wrap;
 }
 
 .hello {

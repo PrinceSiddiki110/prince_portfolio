@@ -1,21 +1,8 @@
 <?php
 session_start();
 
-// Database connection (adjust credentials if needed)
-$dsn = 'mysql:host=127.0.0.1;dbname=portfolio;charset=utf8mb4';
-$dbUser = 'root';
-$dbPass = '';
-
-try {
-    $pdo = new PDO($dsn, $dbUser, $dbPass, [
-        PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
-        PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,
-    ]);
-} catch (Exception $e) {
-    http_response_code(500);
-    echo 'Database connection error';
-    exit;
-}
+// Database connection (use mysqli from db.php)
+require_once __DIR__ . '/db.php';
 
 // Simple CSRF helper
 if (empty($_SESSION['csrf_token'])) {
@@ -34,9 +21,15 @@ if ($action === 'login') {
         $username = $_POST['username'] ?? '';
         $password = $_POST['password'] ?? '';
 
-        $stmt = $pdo->prepare('SELECT id, password FROM admins WHERE username = ? LIMIT 1');
-        $stmt->execute([$username]);
-        $admin = $stmt->fetch();
+        $stmt = $mysqli->prepare('SELECT id, password FROM admins WHERE username = ? LIMIT 1');
+        $stmt->bind_param('s', $username);
+        $stmt->execute();
+        $stmt->bind_result($admin_id, $admin_password);
+        $admin = null;
+        if ($stmt->fetch()) {
+            $admin = ['id' => $admin_id, 'password' => $admin_password];
+        }
+        $stmt->close();
 
         if ($admin && ($password == $admin['password'])) {
             $_SESSION['admin_id'] = $admin['id'];
@@ -89,17 +82,22 @@ require_admin();
 
 // No sections CRUD needed - removed
 
-// Fetch statistics for dashboard
-$stats = [
-    'projects' => $pdo->query('SELECT COUNT(*) FROM projects')->fetchColumn(),
-    'skills' => $pdo->query('SELECT COUNT(*) FROM skills')->fetchColumn(),
-    'messages' => $pdo->query('SELECT COUNT(*) FROM contact_messages')->fetchColumn(),
-    'unread_messages' => $pdo->query('SELECT COUNT(*) FROM contact_messages WHERE is_read = 0')->fetchColumn()
-];
+// Fetch statistics for dashboard using mysqli
+$stats = [];
+$res = $mysqli->query('SELECT COUNT(*) AS c FROM projects');
+$stats['projects'] = ($res && ($r = $res->fetch_assoc())) ? (int)$r['c'] : 0;
+$res = $mysqli->query('SELECT COUNT(*) AS c FROM skills');
+$stats['skills'] = ($res && ($r = $res->fetch_assoc())) ? (int)$r['c'] : 0;
+$res = $mysqli->query('SELECT COUNT(*) AS c FROM contact_messages');
+$stats['messages'] = ($res && ($r = $res->fetch_assoc())) ? (int)$r['c'] : 0;
+$res = $mysqli->query('SELECT COUNT(*) AS c FROM contact_messages WHERE is_read = 0');
+$stats['unread_messages'] = ($res && ($r = $res->fetch_assoc())) ? (int)$r['c'] : 0;
 
 // Fetch recent items for dashboard
-$recent_projects = $pdo->query('SELECT id, title, type, created_at FROM projects ORDER BY created_at DESC LIMIT 5')->fetchAll();
-$recent_messages = $pdo->query('SELECT id, name, subject, created_at, is_read FROM contact_messages ORDER BY created_at DESC LIMIT 5')->fetchAll();
+$res = $mysqli->query('SELECT id, title, type, created_at FROM projects ORDER BY created_at DESC LIMIT 5');
+$recent_projects = $res ? $res->fetch_all(MYSQLI_ASSOC) : [];
+$res = $mysqli->query('SELECT id, name, subject, created_at, is_read FROM contact_messages ORDER BY created_at DESC LIMIT 5');
+$recent_messages = $res ? $res->fetch_all(MYSQLI_ASSOC) : [];
 // Dashboard view
 ?>
 <!DOCTYPE html>

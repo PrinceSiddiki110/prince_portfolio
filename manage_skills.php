@@ -4,7 +4,12 @@ require_once __DIR__ . '/functions.php';
 require_once __DIR__ . '/db.php';
 require_admin();
 
-$skills = $pdo->query("SELECT * FROM skills ORDER BY sort_order, name")->fetchAll();
+$skills = [];
+$res = $mysqli->query("SELECT * FROM skills ORDER BY sort_order, name");
+if ($res) {
+    $skills = $res->fetch_all(MYSQLI_ASSOC);
+    $res->free();
+}
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -16,9 +21,10 @@ $skills = $pdo->query("SELECT * FROM skills ORDER BY sort_order, name")->fetchAl
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 </head>
 <body class="admin-panel">
-    <?php include 'admin_sidebar.php'; ?>
-    
-    <main class="main-content">
+    <div class="admin-layout">
+        <?php include 'admin_sidebar.php'; ?>
+        
+        <main class="admin-main">
         <div class="dashboard-header">
             <h1>Manage Skills</h1>
             <div class="quick-actions">
@@ -28,10 +34,11 @@ $skills = $pdo->query("SELECT * FROM skills ORDER BY sort_order, name")->fetchAl
 
         <section class="dashboard-section">
             <div class="table-responsive">
-                <table class="admin-table">
+                <table class="admin-table" style="min-width: 600px;">
                     <thead>
                         <tr>
                             <th>Name</th>
+                            <th>Category</th>
                             <th>Level</th>
                             <th width="120">Actions</th>
                         </tr>
@@ -43,6 +50,9 @@ $skills = $pdo->query("SELECT * FROM skills ORDER BY sort_order, name")->fetchAl
                                 <div class="skill-name">
                                     <?php echo htmlspecialchars($skill['name']); ?>
                                 </div>
+                            </td>
+                            <td>
+                                <span class="tag"><?php echo htmlspecialchars($skill['category']); ?></span>
                             </td>
                             <td>
                                 <div class="skill-level">
@@ -70,7 +80,8 @@ $skills = $pdo->query("SELECT * FROM skills ORDER BY sort_order, name")->fetchAl
                 </table>
             </div>
         </section>
-    </main>
+        </main>
+    </div>
 
     <script src="js/admin.js"></script>
 </body>
