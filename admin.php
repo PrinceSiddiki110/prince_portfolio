@@ -1,86 +1,30 @@
 <?php
-session_start();
-
-// Database connection (use mysqli from db.php)
+require_once __DIR__ . '/functions.php';
 require_once __DIR__ . '/db.php';
 
-// Simple CSRF helper
-if (empty($_SESSION['csrf_token'])) {
-    $_SESSION['csrf_token'] = bin2hex(random_bytes(16));
-}
-function check_csrf($token) {
-    return isset($_SESSION['csrf_token']) && hash_equals($_SESSION['csrf_token'], $token);
+// Initialize secure session
+initSecureSession();
+
+// Update last activity
+updateLastActivity();
+
+// Check for session timeout
+if (isSessionIdle()) {
+    logout();
 }
 
-// Route
+// Route handling
 $action = $_GET['action'] ?? 'dashboard';
 
-if ($action === 'login') {
-    // Login page + handler
-    if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-        $username = $_POST['username'] ?? '';
-        $password = $_POST['password'] ?? '';
-
-        $stmt = $mysqli->prepare('SELECT id, password FROM admins WHERE username = ? LIMIT 1');
-        $stmt->bind_param('s', $username);
-        $stmt->execute();
-        $stmt->bind_result($admin_id, $admin_password);
-        $admin = null;
-        if ($stmt->fetch()) {
-            $admin = ['id' => $admin_id, 'password' => $admin_password];
-        }
-        $stmt->close();
-
-        if ($admin && ($password == $admin['password'])) {
-            $_SESSION['admin_id'] = $admin['id'];
-            // regenerate session id for security
-            session_regenerate_id(true);
-            header('Location: admin.php');
-            exit;
-        } else {
-            $error = 'Invalid credentials';
-        }
-    }
-
-    // Login form
-    ?>
-    <!doctype html>
-    <html>
-    <head><meta charset="utf-8"><title>Admin Login</title></head>
-    <body>
-      <h1>Admin Login</h1>
-      <?php if (!empty($error)) : ?>
-        <p style="color:red;"><?php echo htmlspecialchars($error); ?></p>
-      <?php endif; ?>
-      <form method="post" action="admin.php?action=login">
-        <label>
-          Username:<br>
-          <input type="text" name="username" required>
-        </label><br><br>
-        <label>
-          Password:<br>
-          <input type="password" name="password" required>
-        </label><br><br>
-        <button type="submit">Login</button>
-      </form>
-    </body>
-    </html>
-    <?php
-    exit;
-}
-
 if ($action === 'logout') {
-    session_unset();
-    session_destroy();
-    header('Location: admin.php?action=login');
-    exit;
+    logout();
 }
 
-// Protect admin pages
-require_once __DIR__ . '/functions.php';
+// Protect admin pages - require authentication
 require_admin();
 
-// No sections CRUD needed - removed
+// Get current admin info
+$current_admin = getCurrentAdmin();
 
 // Fetch statistics for dashboard using mysqli
 $stats = [];

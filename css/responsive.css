@@ -15,7 +15,7 @@
     .main-content { 
         margin-top: var(--nav-height-mobile);
         min-height: calc(100vh - var(--nav-height-mobile));
-        padding: 0; 
+        padding-left: 10vw;
     }
     
     .section {
@@ -263,6 +263,7 @@
     
     .nav-toggle {
         display: flex;
+        width: 50px;
     }
     
     .brand-role {

@@ -1,13 +1,8 @@
 <?php
-require_once 'functions.php';
-require_once 'db.php';
-
-// Check if admin is logged in
-session_start();
-if (!isAdminLoggedIn()) {
-    header('Location: adminlogin.php');
-    exit();
-}
+require_once __DIR__ . '/functions.php';
+require_once __DIR__ . '/db.php';
+initSecureSession();
+require_admin();
 
 $message = '';
 $error = '';

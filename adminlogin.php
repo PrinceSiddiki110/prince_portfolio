@@ -1,6 +1,7 @@
 <?php
-session_start();
-require __DIR__ . '/db.php'; // db.php provides $mysqli
+require_once __DIR__ . '/functions.php';
+require_once __DIR__ . '/db.php';
+initSecureSession();
 
 // If already logged in, go to admin panel
 if (!empty($_SESSION['admin_id'])) {
@@ -34,10 +35,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $stmt->close();
 
         if ($admin && $password == $admin['password']) {
-          session_regenerate_id(true);
-          $_SESSION['admin_id'] = $admin['id'];
-          // rotate CSRF token after successful login
-          unset($_SESSION['csrf_token']);
+          // Use the proper login function from functions.php
+          loginAdmin($admin['id'], $username, false);
           header('Location: admin.php');
           exit;
         } else {
@@ -52,8 +51,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 }
 
 // Generate CSRF token for the form (fresh on each GET / failed POST)
-$csrf_token = bin2hex(random_bytes(32));
-$_SESSION['csrf_token'] = $csrf_token;
+$csrf_token = generateCSRFToken();
 ?>
 <!doctype html>
 <html lang="en">

@@ -20,6 +20,8 @@ if (themeToggle) {
   themeToggle.addEventListener('click', () => {
     const currentTheme = body.getAttribute('data-theme');
     const newTheme = currentTheme === 'light' ? 'dark' : 'light';
+    
+    // Update theme
     body.setAttribute('data-theme', newTheme);
     themeToggle.setAttribute('aria-pressed', newTheme === 'dark');
     localStorage.setItem('theme', newTheme);
@@ -29,6 +31,11 @@ if (themeToggle) {
     setTimeout(() => {
       themeToggle.style.transform = '';
     }, 150);
+    
+    // Close mobile nav if open when theme changes
+    if (navMenu && navMenu.classList.contains('active')) {
+      closeMobileNav();
+    }
   });
 
   // Load saved theme
@@ -47,20 +54,50 @@ if (navToggle && navMenu) {
 
 // Function to toggle mobile navigation
 function toggleMobileNav() {
-  navMenu.classList.toggle('active');
-  navToggle.classList.toggle('active');
-  mobileNavOverlay.classList.toggle('active');
+  const isOpen = navMenu.classList.contains('active');
+  
+  if (isOpen) {
+    closeMobileNav();
+  } else {
+    openMobileNav();
+  }
+}
+
+// Function to open mobile navigation
+function openMobileNav() {
+  navMenu.classList.add('active');
+  navToggle.classList.add('active');
+  mobileNavOverlay.classList.add('active');
   
   // Update aria-expanded attribute
-  const isOpen = navMenu.classList.contains('active');
-  navToggle.setAttribute('aria-expanded', isOpen);
+  navToggle.setAttribute('aria-expanded', 'true');
   
   // Prevent body scroll when nav is open
-  if (isOpen) {
-    document.body.style.overflow = 'hidden';
-  } else {
-    document.body.style.overflow = '';
-  }
+  document.body.style.overflow = 'hidden';
+  
+  // Add focus trap for accessibility
+  setTimeout(() => {
+    const firstNavLink = navMenu.querySelector('.nav-link');
+    if (firstNavLink) {
+      firstNavLink.focus();
+    }
+  }, 300);
+}
+
+// Function to close mobile navigation
+function closeMobileNav() {
+  navMenu.classList.remove('active');
+  navToggle.classList.remove('active');
+  mobileNavOverlay.classList.remove('active');
+  
+  // Update aria-expanded attribute
+  navToggle.setAttribute('aria-expanded', 'false');
+  
+  // Restore body scroll
+  document.body.style.overflow = '';
+  
+  // Return focus to toggle button
+  navToggle.focus();
 }
 
 // Close mobile nav when clicking nav links
@@ -72,15 +109,6 @@ navLinks.forEach(link => {
   });
 });
 
-// Function to close mobile navigation
-function closeMobileNav() {
-  navMenu.classList.remove('active');
-  navToggle.classList.remove('active');
-  mobileNavOverlay.classList.remove('active');
-  navToggle.setAttribute('aria-expanded', 'false');
-  document.body.style.overflow = '';
-}
-
 // Close mobile nav when clicking overlay
 if (mobileNavOverlay) {
   mobileNavOverlay.addEventListener('click', () => {
@@ -89,16 +117,32 @@ if (mobileNavOverlay) {
 }
 
 // Close mobile nav on window resize
+let resizeTimer;
 window.addEventListener('resize', () => {
-  if (window.innerWidth > 768) {
-    closeMobileNav();
-  }
+  clearTimeout(resizeTimer);
+  resizeTimer = setTimeout(() => {
+    if (window.innerWidth > 768) {
+      closeMobileNav();
+    }
+  }, 250);
 });
 
 // Close mobile nav on escape key
 document.addEventListener('keydown', (e) => {
   if (e.key === 'Escape' && navMenu && navMenu.classList.contains('active')) {
     closeMobileNav();
+  }
+});
+
+// Close mobile nav when clicking outside
+document.addEventListener('click', (e) => {
+  if (navMenu && navMenu.classList.contains('active')) {
+    const isClickInsideNav = navMenu.contains(e.target);
+    const isClickOnToggle = navToggle.contains(e.target);
+    
+    if (!isClickInsideNav && !isClickOnToggle) {
+      closeMobileNav();
+    }
   }
 });
 

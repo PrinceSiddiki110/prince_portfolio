@@ -99,11 +99,10 @@ if ($res) {
                     <i class="fa-solid fa-sun theme-icon sun"></i>
                     <i class="fa-solid fa-moon theme-icon moon"></i>
                 </button>
-                <a class="btn btn-resume" href="assets/resume/Prince_Resume.pdf" download>
-                    <i class="fa-solid fa-download"></i>
-                    <span class="resume-text">Download CV</span>
-                </a>
+
                 <button class="nav-toggle" id="nav-toggle" aria-label="Toggle navigation menu">
+                    <span class="hamburger"></span>
+                    <span class="hamburger"></span>
                     <span class="hamburger"></span>
                 </button>
             </div>
@@ -325,6 +324,10 @@ if ($res) {
             <a href="https://wa.me/your-number" class="contact-link" target="_blank" rel="noopener"><i class="fa-brands fa-whatsapp"></i><span>WhatsApp</span></a>
             <a href="https://www.linkedin.com/in/your-profile" class="contact-link" target="_blank" rel="noopener"><i class="fa-brands fa-linkedin"></i><span>LinkedIn</span></a>
             <a href="mailto:your-email@example.com" class="contact-link"><i class="fa-solid fa-envelope"></i><span>Email</span></a>
+            <a href="assets/resume/Prince_Resume.pdf" class="contact-link download-cv" download>
+              <i class="fa-solid fa-download"></i>
+              <span>Download CV</span>
+            </a>
             <div class="social-row">
               <a href="#" class="social small"><i class="fa-brands fa-github"></i></a>
               <a href="#" class="social small"><i class="fa-brands fa-facebook"></i></a>

@@ -1,8 +1,6 @@
 <?php
 // Check if admin is logged in
-if (!function_exists('isAdminLoggedIn')) {
-    require_once 'functions.php';
-}
+require_once __DIR__ . '/functions.php';
 if (!isAdminLoggedIn()) {
     header('Location: adminlogin.php');
     exit();
